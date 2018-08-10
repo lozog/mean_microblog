@@ -1,0 +1,10 @@
+<div>
+	<h3>Update Blog</h3>
+	<hr>
+	<form [formGroup]="updateForm" class="update-form">
+		<input class="form-control" placeholder="{{blog.title}}" formControlName="title" #title>
+		<button routerLink="/blogs">Back</button>
+		<button type="submit" (click)="updateBlog(title.value)"
+						[disabled]="updateForm.pristine || updateForm.invalid">Save</button>
+	</form>
+</div>

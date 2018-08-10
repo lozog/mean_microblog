@@ -45,7 +45,12 @@ router.route('/blogs/add').post((req, res) => {
 		})
 		.catch(err => {
 			console.log(err);
-			res.status(400).send('Failed to create new record');
+			let message = 'Failed to create new record';
+			if (err.name === 'ValidationError') {
+				message = message + ': Title is already taken';
+			}
+			res.status(400).send(message);
+			// res.status(400).send('Failed to create new record');
 		});
 });
 

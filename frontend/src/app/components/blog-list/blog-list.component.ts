@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Blog } from '../../blog.model';
+import { BlogService } from '../../blog.service';
 
 @Component({
   selector: 'app-blog-list',
@@ -7,9 +11,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlogListComponent implements OnInit {
 
-  constructor() { }
+	blogs: Blog[];
+	displayedColumns = ['title', 'actions'];
+
+  constructor(private blogService:BlogService, private router: Router) { }
 
   ngOnInit() {
+  	this.fetchBlogList();
   }
 
+  fetchBlogList() {
+  	this.blogService
+  		.getBlogList()
+  		.subscribe((data: Blog[]) => {
+  			this.blogs = data;
+  	});
+  }
+
+  editBlog(id) {
+  	this.router.navigate([`/edit/${id}`]);
+  }
+
+  deleteBlog(id) {
+  	this.blogService
+  		.deleteBlog(id)
+  		.subscribe(() => {
+  			this.fetchBlogList();
+  	});
+  }
 }

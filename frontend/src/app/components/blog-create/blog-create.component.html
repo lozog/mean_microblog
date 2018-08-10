@@ -1,3 +1,10 @@
-<p>
-  blog-create works!
-</p>
+<div>
+	<h3>Create a New Blog</h3>
+	<hr>
+	<form [formGroup]="createForm" class="create-form">
+		<input class="form-control" placeholder="Blog Name" formControlName="title" #title>
+		<button routerLink="/blogs">Back</button>
+		<button type="submit" (click)="createBlog(title.value)"
+						[disabled]="createForm.pristine || createForm.invalid">Save</button>
+	</form>
+</div>

@@ -1,3 +1,23 @@
-<p>
-  blog-list works!
-</p>
+<div>
+	<h3>Blog List</h3>
+	<hr>
+	<button routerLink="/blogs/create">Create New Blog</button>
+	<hr>
+	<table>
+	  <thead>
+	    <tr>
+	      <td>Title</td>
+	      <td>Actions</td>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr *ngFor="let blog of blogs">
+	      <td> {{blog.title}} </td>
+	      <td>
+					<button (click)="editBlog(blog._id)">Edit</button>
+					<button (click)="deleteBlog(blog._id)">Delete</button>
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+</div>
