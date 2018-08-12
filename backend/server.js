@@ -50,11 +50,10 @@ router.route('/blogs/add').post((req, res) => {
 				message = message + ': Title is already taken';
 			}
 			res.status(400).send(message);
-			// res.status(400).send('Failed to create new record');
 		});
 });
 
-router.route('/blogs/update/:id').post((req, res) => {
+router.route('/blogs/update/:id').post((req, res, next) => {
 	Blog.findById(req.params.id, (err, blog) => {
 		if (!blog)
 			return next(new Error('Could not load document'));
@@ -79,6 +78,25 @@ router.route('/blogs/delete/:id').get((req, res) => {
 			res.json(err);
 		else
 			res.json('Removed successfully');
+	});
+});
+
+router.route('/blogs/:id/addentry').post((req, res, next) => {
+	Blog.findById(req.params.id, (err, blog) => {
+		if (!blog) {
+			console.log(req.params.id);
+			return next(new Error('Could not load document'));
+		}
+
+		blog.entries.push(req.body);
+
+		blog.save()
+		.then(blog => {
+			res.json('Update done');
+		}).catch(err => {
+			let message = 'Update failed';
+			res.status(400).send(message);
+		});
 	});
 });
 

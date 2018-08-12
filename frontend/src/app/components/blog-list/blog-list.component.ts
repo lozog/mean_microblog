@@ -12,7 +12,6 @@ import { BlogService } from '../../blog.service';
 export class BlogListComponent implements OnInit {
 
 	blogs: Blog[];
-	displayedColumns = ['title', 'actions'];
 
   constructor(private blogService:BlogService, private router: Router) { }
 
@@ -28,8 +27,12 @@ export class BlogListComponent implements OnInit {
   	});
   }
 
+  showBlog(id) {
+    this.router.navigate([`/blogs/${id}`]);
+  }
+
   editBlog(id) {
-  	this.router.navigate([`/edit/${id}`]);
+    this.router.navigate([`/edit/${id}`]);
   }
 
   deleteBlog(id) {

@@ -16,10 +16,12 @@ export class BlogEditComponent implements OnInit {
 	blog: any = {};
 	updateForm: FormGroup;
 
-  constructor(private blogService:BlogService,
-  						private fb: FormBuilder,
-  						private router: Router,
-  						private route: ActivatedRoute) {
+  constructor (
+    private blogService:BlogService,
+		private fb: FormBuilder,
+		private router: Router,
+		private route: ActivatedRoute
+  ) {
   	this.createForm();
   }
 
@@ -31,8 +33,8 @@ export class BlogEditComponent implements OnInit {
   			.subscribe((res) => {
 	  			this.blog = res;
 	  			this.updateForm.get('title').setValue(this.blog.title);
-  		})
-  	})
+  		});
+  	});
   }
 
   createForm() {
