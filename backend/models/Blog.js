@@ -1,19 +1,9 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
-const Schema = mongoose.Schema;
+import Entry from './Entry.js';
 
-let Entry = new Schema({
-	title: {
-		type: String,
-		required: [true, "can't be blank"]
-	},
-	content: {
-		type: String,
-		required: [true, "can't be blank"]
-	},
-	blog: String
-}, {timestamps: true});
+const Schema = mongoose.Schema;
 
 let Blog = new Schema({
 	title: {
@@ -21,7 +11,7 @@ let Blog = new Schema({
 		unique: true,
 		required: [true, "can't be blank"]
 	},
-	entries: [ Entry ]
+	entries: [ Entry.schema ]
 }, {timestamps: true});
 
 Blog.plugin(uniqueValidator, {message: 'is already taken.'});

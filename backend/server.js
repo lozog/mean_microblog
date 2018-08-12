@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import Blog from './models/Blog';
+import Entry from './models/Entry';
 
 const app = express();
 const router = express.Router();
@@ -84,7 +85,6 @@ router.route('/blogs/delete/:id').get((req, res) => {
 router.route('/blogs/:id/addentry').post((req, res, next) => {
 	Blog.findById(req.params.id, (err, blog) => {
 		if (!blog) {
-			console.log(req.params.id);
 			return next(new Error('Could not load document'));
 		}
 
@@ -97,6 +97,22 @@ router.route('/blogs/:id/addentry').post((req, res, next) => {
 			let message = 'Update failed';
 			res.status(400).send(message);
 		});
+	});
+});
+
+router.route('/blogs/:blog_id/entries/delete/:id').get((req, res) => {
+	Blog.findById(req.params.blog_id, (err, blog) => {
+		if (err)
+			res.json(err);
+		else {
+			blog.entries.id(req.params.id).remove();
+			blog.save((err) => {
+				if (err)
+					res.json(err);
+				else
+					res.json('Removed successfully');
+			});
+		}
 	});
 });
 

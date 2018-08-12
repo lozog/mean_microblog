@@ -34,4 +34,12 @@ export class BlogShowComponent implements OnInit {
   		});
   	});
   }
+
+  deleteEntry(entry_id) {
+    this.blogService
+      .deleteEntry(this.id, entry_id)
+      .subscribe(() => {
+        this.fetchBlog();
+    });
+  }
 }

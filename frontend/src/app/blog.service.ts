@@ -45,4 +45,8 @@ export class BlogService {
     };
     return this.http.post(`${this.uri}/blogs/${id}/addentry`, entry);
   }
+
+  deleteEntry(blog_id, entry_id) {
+    return this.http.get(`${this.uri}/blogs/${blog_id}/entries/delete/${entry_id}`);
+  }
 }

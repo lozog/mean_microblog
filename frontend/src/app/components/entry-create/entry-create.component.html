@@ -2,9 +2,9 @@
 	<h3>Create a New Entry for {{blog.title}}</h3>
 	<hr>
 	<form [formGroup]="createForm" class="create-form">
-		<input class="form-control" placeholder="Blog Name" formControlName="title" #title/>
+		<input class="form-control" placeholder="Entry Name" formControlName="title" #title/>
 		<br>
-		<textarea class="form-control" placeholder="Blog Content" formControlName="content" #content></textarea>
+		<textarea class="form-control" placeholder="Entry Content" formControlName="content" #content></textarea>
 		<br>
 		<button routerLink="/blogs/{{blog.id}}">Back</button>
 		<button type="submit" (click)="createEntry(title.value, content.value)"
