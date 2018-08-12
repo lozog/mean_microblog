@@ -88,15 +88,21 @@ router.route('/blogs/:id/addentry').post((req, res, next) => {
 			return next(new Error('Could not load document'));
 		}
 
-		blog.entries.push(req.body);
+		let entry = req.body;
+		if (entry.content.length > 160) {
+			res.status(400).send('Error: Content can be at most 160 characters long');
+		} else {
+			blog.entries.push(entry);
 
-		blog.save()
-		.then(blog => {
-			res.json('Update done');
-		}).catch(err => {
-			let message = 'Update failed';
-			res.status(400).send(message);
-		});
+			blog.save()
+			.then(blog => {
+				res.json('Update done');
+			})
+			.catch(err => {
+				let message = 'Update failed';
+				res.status(400).send(message);
+			});
+		}
 	});
 });
 
