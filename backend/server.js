@@ -82,13 +82,34 @@ router.route('/blogs/delete/:id').get((req, res) => {
 	});
 });
 
+router.route('/blogs/:blog_id/entries/:id').get((req, res, next) => {
+	Blog.findById(req.params.blog_id, (err, blog) => {
+		if (err)
+			console.log(err);
+		else {
+			let entry = blog.entries.id(req.params.id);
+			if (!entry) {
+				return next(new Error('Could not load document'));
+			}
+			res.json(entry);
+		}
+	});
+});
+
 router.route('/blogs/:id/addentry').post((req, res, next) => {
 	Blog.findById(req.params.id, (err, blog) => {
 		if (!blog) {
 			return next(new Error('Could not load document'));
 		}
 
-		let entry = req.body;
+		let entry = new Entry({
+			title: req.body.title,
+			content: req.body.content,
+			blog: req.body.blog
+		});
+
+		console.log(req.body);
+
 		if (entry.content.length > 160) {
 			res.status(400).send('Error: Content can be at most 160 characters long');
 		} else {

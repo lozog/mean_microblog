@@ -35,6 +35,10 @@ export class BlogShowComponent implements OnInit {
   	});
   }
 
+  showEntry(blog_id, entry_id) {
+    this.router.navigate([`/blogs/${blog_id}/entry/${entry_id}`]);
+  }
+
   deleteEntry(entry_id) {
     this.blogService
       .deleteEntry(this.id, entry_id)

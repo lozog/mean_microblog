@@ -37,6 +37,10 @@ export class BlogService {
   	return this.http.get(`${this.uri}/blogs/delete/${id}`);
   }
 
+  getEntryById(blog_id, id) {
+    return this.http.get(`${this.uri}/blogs/${blog_id}/entries/${id}`);
+  }
+
   createEntry(id, title, content) {
     const entry = {
       title: title,
